@@ -13,7 +13,9 @@ namespace axt::ecs
 
 	EntityID Scene::CreateEntity()
 	{
-		return mIDManager.Create();
+		EntityID r{ mIDManager.Create() };
+		mEntityInfo->at(r).ID = r;
+		return r;
 	}
 
 	void Scene::DestroyEntity(const EntityID& id)
@@ -26,6 +28,11 @@ namespace axt::ecs
 		}
 		mEntityInfo->at(id).Mask.reset();
 		mIDManager.Remove(id);
+	}
+
+	Ref<std::array<Scene::EntityInfo, gMaxEntities>> Scene::GetEntityInfo()
+	{
+		return mEntityInfo;
 	}
 
 }

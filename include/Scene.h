@@ -14,12 +14,16 @@ namespace axt::ecs
 	class AXT_API Scene
 	{
 	public:
+		struct EntityInfo
+		{
+			EntityID ID;
+			Signature Mask;
+		};
+	public:
 		EntityID CreateEntity();
 		void DestroyEntity(const EntityID& id);
-		std::bitset<gMaxComponents>& GetBitset(EntityID& id)
-		{
-			return mEntityInfo->at(id).Mask;
-		}
+		Ref<std::array<EntityInfo, gMaxEntities>> GetEntityInfo();
+
 		template<typename T>
 		void Attach(const EntityID& id)
 		{
@@ -41,14 +45,23 @@ namespace axt::ecs
 		{
 			mEntityInfo->at(id).Mask.reset(GetComponentTypeID<T>());
 		}
-		Scene();
-	public:
-		struct EntityInfo
+
+		// returns a pointer to the data block
+		template<typename T>
+		T* GetComponent(const EntityID& id)
 		{
-			EntityID ID;
-			Signature Mask;
-			//bool IsValid{ true }; // switch this to false when the data pocket moves or entity is deleted
-		};
+			ComponentTypeID cid{ GetComponentTypeID<T>() };
+
+			if (mPacks->size() <= cid)
+			{
+				assert(false && "No component pack found");
+				//std::quick_exit(EXIT_FAILURE);
+			}
+
+			return (static_cast<T*>(mPacks->at(cid).Get(id)));
+		}
+
+		Scene();
 	protected:
 		IDManager mIDManager;
 		Ref<std::vector<ComponentPack>> mPacks;

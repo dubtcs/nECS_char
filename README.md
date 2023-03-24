@@ -43,6 +43,15 @@ Below is a basic example of workflow with nECS
     // Remove a component from the entity
 	sScene.Detach<Transform>(e1);
 
+	// Get a list of all entities containing the requested components
+	SceneView<Transform> transformView{ sScene };
+	for (EntityID id : transformView)
+	{
+		// Get the component as a pointer
+		Transform* trans{ sScene->GetComponent<Transform>(id) };
+		trans->x = 15.f;
+	}
+
     // Destroy an entity and all components relating to it
 	sScene.DestroyEntity(e1);
 

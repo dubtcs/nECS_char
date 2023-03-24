@@ -3,8 +3,6 @@
 #include <memory>
 #include <bitset>
 
-#define AXT_API
-
 namespace axt::ecs
 {
 
@@ -18,7 +16,9 @@ namespace axt::ecs
 	// make sure gMaxComponents and ComponentTypeID share same bit size
 	using ComponentTypeID = uint32_t;
 
-
+// this is for AxtEngine compatibility
+#ifndef AXT_API
+#define AXT_API
 	// smart pointers
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
@@ -35,5 +35,6 @@ namespace axt::ecs
 	constexpr Unique<T> NewUnique(A&&... a) {
 		return std::make_unique<T>(std::forward<A>(a)...);
 	}
+#endif
 
 }
