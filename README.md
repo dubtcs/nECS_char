@@ -2,6 +2,10 @@
 
 A lightweight ECS I use in my [AxtEngine](https://github.com/dubtcs/AxtEngine).
 
+### But why?
+
+I wanted to try making my own. Once I heard about the idea of an ECS while working on AxtEngine, I really wanted to know how they worked. I think this was a great way to learn.
+
 ## Getting started
 
 - Clone the repository using `git clone https://github.com/dubtcs/AxtEngine.git`
