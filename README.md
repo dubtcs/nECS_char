@@ -2,8 +2,6 @@
 
 A lightweight ECS I use in my [AxtEngine](https://github.com/dubtcs/AxtEngine).
 
-### But why?
-
 I wanted to try making my own. Once I heard about the idea of an ECS while working on AxtEngine, I really wanted to know how they worked. I think this was a great way to learn.
 
 ## Getting started
@@ -16,7 +14,28 @@ I wanted to try making my own. Once I heard about the idea of an ECS while worki
 
 All functionality is in namespace axt::ecs
 
-Below is a basic example of workflow with nECS
+### Objects
+
+**EntityID** : A uint64_t for identifying entity data.
+
+**Scene** : This controls EntityID distribution, ComponentPack management, and data fetching.
+
+**ComponentPack** : A packed list of data for each entity it's attached to.
+
+**SceneView** : A list of EntityIDs that have components attached to them of the requested type.
+
+**IDManager** : Handles EntityID distrubtion.
+
+### Basic Example
+
+Below is a basic example of:
+
+ - Creating an antity
+ - Attaching a Transform component
+ - Getting a SceneView of all entities with Transforms
+ - Setting the Transform's x variable to 15
+ - Deleting the entity
+
 
     using namespace axt::ecs;
 
@@ -24,34 +43,19 @@ Below is a basic example of workflow with nECS
 	{
 		float x;
 	};
-	struct Color
-	{
-		float x;
-	};
 
-	ecs::Scene sScene{};
+	Scene sScene{};
 
-    // Create from the scene. It will return an EntityID.
-    // This ID is what you use to access data relating to the entity.
 	EntityID e1{ sScene.CreateEntity() };
 
-    // Attach a component to an entity.
-    // No registering the component required, just attach it and the system will make it work.
 	sScene.Attach<Transform>(e1);
-	sScene.Attach<Color>(e1);
 
-    // Remove a component from the entity
-	sScene.Detach<Transform>(e1);
-
-	// Get a list of all entities containing the requested components
 	SceneView<Transform> transformView{ sScene };
 	for (EntityID id : transformView)
 	{
-		// Get the component as a pointer
 		Transform* trans{ sScene->GetComponent<Transform>(id) };
 		trans->x = 15.f;
 	}
 
-    // Destroy an entity and all components relating to it
 	sScene.DestroyEntity(e1);
 
