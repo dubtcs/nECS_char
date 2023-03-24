@@ -10,8 +10,11 @@ A lightweight ECS I use in my [AxtEngine](https://github.com/dubtcs/AxtEngine).
 
 ## How to use
 
-`
-    using namespace ecs;
+All functionality is in namespace axt::ecs
+
+Below is a basic example of workflow with nECS
+
+    using namespace axt::ecs;
 
 	struct Transform
 	{
@@ -38,4 +41,4 @@ A lightweight ECS I use in my [AxtEngine](https://github.com/dubtcs/AxtEngine).
 
     // Destroy an entity and all components relating to it
 	sScene.DestroyEntity(e1);
-`
+
