@@ -36,8 +36,8 @@ Below is a basic example of:
  - Setting the Transform's x variable to 15
  - Deleting the entity
 
-
-    using namespace axt::ecs;
+```
+	using namespace axt::ecs;
 
 	struct Transform
 	{
@@ -58,4 +58,4 @@ Below is a basic example of:
 	}
 
 	sScene.DestroyEntity(e1);
-
+```
