@@ -1,15 +1,13 @@
 #pragma once
 
-#include <axt/Core.h>
-
 #include "Typedef.h"
 
 #include <stack>
 
-namespace axt::ecs
+namespace ecs
 {
 
-	class AXT_API IDManager
+	class IDManager
 	{
 	public:
 		EntityID Create();

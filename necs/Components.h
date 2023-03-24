@@ -1,9 +1,8 @@
 #pragma once
 
-#include <axt/Core.h>
 #include "Typedef.h"
 
-namespace axt::ecs
+namespace ecs
 {
 
 	extern ComponentTypeID sComponentTypesRegistered;

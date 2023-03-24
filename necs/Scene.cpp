@@ -1,8 +1,7 @@
-#include <pch.h>
 
 #include "Scene.h"
 
-namespace axt::ecs
+namespace ecs
 {
 
 	Scene::Scene()

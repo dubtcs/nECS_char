@@ -1,8 +1,7 @@
-#include <pch.h>
 
 #include "Components.h"
 
-namespace axt::ecs
+namespace ecs
 {
 
 	ComponentTypeID sComponentTypesRegistered{ 0 };

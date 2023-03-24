@@ -1,16 +1,14 @@
 #pragma once
 
-#include <axt/Core.h>
-
 #include "Scene.h"
 #include "ComponentPack.h"
 
-namespace axt::ecs
+namespace ecs
 {
 
 	// returns a list of EntityIDs that have the requested components attached
 	template<typename... T>
-	class AXT_API SceneView
+	class SceneView
 	{
 	public:
 		SceneView(Ref<Scene>&scene) : mScene{ scene }

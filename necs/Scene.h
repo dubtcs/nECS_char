@@ -1,17 +1,17 @@
 #pragma once
 
-#include <axt/Core.h>
-
 #include "IDManager.h"
 #include "ComponentPack.h"
 #include "Components.h"
 
 #include <vector>
+#include <array>
+#include <assert.h>
 
-namespace axt::ecs
+namespace ecs
 {
 
-	class AXT_API Scene
+	class Scene
 	{
 	public:
 		struct EntityInfo

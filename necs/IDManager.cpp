@@ -1,8 +1,7 @@
-#include <pch.h>
 
 #include "IDManager.h"
 
-namespace axt::ecs
+namespace ecs
 {
 
 	IDManager::IDManager() :

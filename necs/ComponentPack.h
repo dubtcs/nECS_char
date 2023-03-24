@@ -1,16 +1,16 @@
 #pragma once
 
-#include <axt/Core.h>
 #include "Typedef.h"
 
-#include <ostream>
+#include <vector>
+#include <array>
 
-namespace axt::ecs
+namespace ecs
 {
 
 	using PackIndex = int32_t;
 
-	class AXT_API ComponentPack
+	class ComponentPack
 	{
 	public:
 		ComponentPack() = default;

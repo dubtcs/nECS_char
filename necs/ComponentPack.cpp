@@ -1,4 +1,3 @@
-#include <pch.h>
 
 #include "ComponentPack.h"
 
@@ -6,7 +5,7 @@
 
 #include <algorithm>
 
-namespace axt::ecs
+namespace ecs
 {
 
 	ComponentPack::ComponentPack(size_t s) :
@@ -43,7 +42,6 @@ namespace axt::ecs
 
 		if (replacementIndex > gMaxComponents)
 		{
-			AXT_WARN("Pack index {0} invalid. Element size: {1}", id, mElementSize);
 			return;
 		}
 

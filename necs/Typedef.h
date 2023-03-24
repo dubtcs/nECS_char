@@ -3,12 +3,12 @@
 #include <memory>
 #include <bitset>
 
-namespace axt::ecs
+namespace ecs
 {
 
-	inline constexpr uint32_t gMaxEntities{ 1'000'000 }; // 100
-	inline constexpr uint32_t gMaxEntitiesOOB{ gMaxEntities + 1 }; // 101
-	inline constexpr uint16_t gMaxComponents{ 32 }; // 16
+	constexpr uint32_t gMaxEntities{ 1'000'000 }; // 100
+	constexpr uint32_t gMaxEntitiesOOB{ gMaxEntities + 1 }; // 101
+	constexpr uint16_t gMaxComponents{ 32 }; // 16
 
 	using Signature = std::bitset< gMaxComponents >;
 	using EntityID = uint64_t;
@@ -16,9 +16,6 @@ namespace axt::ecs
 	// make sure gMaxComponents and ComponentTypeID share same bit size
 	using ComponentTypeID = uint32_t;
 
-// this is for AxtEngine compatibility
-#ifndef AXT_API
-#define AXT_API
 	// smart pointers
 	template<typename T>
 	using Ref = std::shared_ptr<T>;
@@ -35,6 +32,5 @@ namespace axt::ecs
 	constexpr Unique<T> NewUnique(A&&... a) {
 		return std::make_unique<T>(std::forward<A>(a)...);
 	}
-#endif
 
 }
