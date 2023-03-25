@@ -23,6 +23,7 @@ namespace ecs
 		EntityID CreateEntity();
 		void DestroyEntity(const EntityID& id);
 		Ref<std::array<EntityInfo, gMaxEntities>> GetEntityInfo();
+		const IDManager& GetIDManager() const;
 
 		template<typename T>
 		void Attach(const EntityID& id)
