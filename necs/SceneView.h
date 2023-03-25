@@ -20,13 +20,14 @@ namespace ecs
 				mSignature.set(ids[i]);
 			}
 
-			// should probably make an "ids used" vector instead of looping through potentially millions of ids every time
-			// also I think the it->ID is redundant as the ID is just the index?
-			for (std::array<Scene::EntityInfo, gMaxEntities>::iterator it{ mScene->GetEntityInfo()->begin() }; it < mScene->GetEntityInfo()->end(); it++)
+			// this is better but still slow
+			// maybe save the ids to each pack or system manager?
+			Ref<std::array<Scene::EntityInfo, gMaxEntities>> info{ mScene->GetEntityInfo() };
+			for (EntityID i : mScene->GetIDManager())
 			{
-				if ((mSignature & (it->Mask)) == mSignature)
+				if ((mSignature & (info->at(i).Mask)) == mSignature)
 				{
-					mEntities.push_back(it->ID);
+					mEntities.push_back(info->at(i).ID);
 				}
 			}
 		}

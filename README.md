@@ -1,6 +1,6 @@
 # nECS
 
-A lightweight ECS I use in my [AxtEngine](https://github.com/dubtcs/AxtEngine).
+A simple ECS I use in my [AxtEngine](https://github.com/dubtcs/AxtEngine).
 
 I wanted to try making my own. Once I heard about the idea of an ECS while working on AxtEngine, I really wanted to know how they worked. I think this was a great way to learn.
 
