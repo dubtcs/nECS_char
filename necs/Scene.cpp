@@ -34,4 +34,9 @@ namespace ecs
 		return mEntityInfo;
 	}
 
+	const IDManager& Scene::GetIDManager() const
+	{
+		return mIDManager;
+	}
+
 }

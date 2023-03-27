@@ -6,9 +6,9 @@
 namespace ecs
 {
 
-	constexpr uint32_t gMaxEntities{ 1'000'000 }; // 100
-	constexpr uint32_t gMaxEntitiesOOB{ gMaxEntities + 1 }; // 101
-	constexpr uint16_t gMaxComponents{ 32 }; // 16
+	inline constexpr uint32_t gMaxEntities{ 1'000'000 }; // 100
+	inline constexpr uint32_t gMaxEntitiesOOB{ gMaxEntities + 1 }; // 101
+	inline constexpr uint16_t gMaxComponents{ 32 }; // 16
 
 	using Signature = std::bitset< gMaxComponents >;
 	using EntityID = uint64_t;

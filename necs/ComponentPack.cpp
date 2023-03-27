@@ -5,12 +5,18 @@
 
 #include <algorithm>
 
+inline constexpr size_t gMinVectorCapacity{ 25 };
+
 namespace ecs
 {
 
 	ComponentPack::ComponentPack(size_t s) :
 		mElementSize{ s }
 	{
+		//mData = NewRef<std::vector<char>>(gMinVectorCapacity * s);
+		//mIndexToEntity = NewRef<std::vector<size_t>>(gMinVectorCapacity);
+		// try a hash map-esque way of packing data, reserve a minimum amount of data, say 20% max components, then expand if we need too
+
 		mData = NewRef<std::vector<char>>();
 		mIndexToEntity = NewRef<std::vector<size_t>>();
 		mEntityToIndex = NewRef<std::array<size_t, gMaxEntities>>();
@@ -24,7 +30,7 @@ namespace ecs
 		return address;
 	}
 
-	void ComponentPack::Add(const EntityID& id)
+	void* ComponentPack::Add(const EntityID& id)
 	{
 		// expanding buffer size to fit another element
 		mData->resize(mData->size() + mElementSize);
@@ -32,7 +38,7 @@ namespace ecs
 		mEntityToIndex->at(id) = mLength;
 		mIndexToEntity->push_back(id);
 
-		mLength++;
+		return &(mData->at(mLength++ * mElementSize));
 	}
 
 	void ComponentPack::Remove(const EntityID& id)

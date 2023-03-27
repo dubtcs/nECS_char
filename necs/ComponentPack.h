@@ -2,8 +2,7 @@
 
 #include "Typedef.h"
 
-#include <vector>
-#include <array>
+#include <ostream>
 
 namespace ecs
 {
@@ -16,7 +15,7 @@ namespace ecs
 		ComponentPack() = default;
 		ComponentPack(size_t elementSize);
 		void* Get(const EntityID& id);
-		void Add(const EntityID& id);
+		void* Add(const EntityID& id);
 		void Remove(const EntityID& id);
 	protected:
 		Ref<std::vector<char>> mData;

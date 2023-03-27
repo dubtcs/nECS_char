@@ -5,8 +5,6 @@
 #include "Components.h"
 
 #include <vector>
-#include <array>
-#include <assert.h>
 
 namespace ecs
 {
@@ -26,7 +24,7 @@ namespace ecs
 		const IDManager& GetIDManager() const;
 
 		template<typename T>
-		void Attach(const EntityID& id)
+		T& Attach(const EntityID& id)
 		{
 			ComponentTypeID cid{ GetComponentTypeID<T>() };
 
@@ -37,19 +35,21 @@ namespace ecs
 				mPacks->push_back({ sizeof(T) });
 			}
 
-			mPacks->at(cid).Add(id);
 
 			mEntityInfo->at(id).Mask.set(cid);
+			return *static_cast<T*>(mPacks->at(cid).Add(id));
 		}
 		template<typename T>
 		void Detach(const EntityID& id)
 		{
-			mEntityInfo->at(id).Mask.reset(GetComponentTypeID<T>());
+			ComponentTypeID cid{ GetComponentTypeID<T>() };
+			mEntityInfo->at(id).Mask.reset(cid);
+			mPacks->at(cid).Remove(id);
 		}
 
 		// returns a pointer to the data block
 		template<typename T>
-		T* GetComponent(const EntityID& id)
+		T& GetComponent(const EntityID& id)
 		{
 			ComponentTypeID cid{ GetComponentTypeID<T>() };
 
@@ -59,7 +59,7 @@ namespace ecs
 				//std::quick_exit(EXIT_FAILURE);
 			}
 
-			return (static_cast<T*>(mPacks->at(cid).Get(id)));
+			return *(static_cast<T*>(mPacks->at(cid).Get(id)));
 		}
 
 		Scene();

@@ -14,11 +14,16 @@ namespace ecs
 		SceneView(Ref<Scene>&scene) : mScene{ scene }
 		{
 			static_assert(sizeof...(T) > 0, "Must have 1 or more components in scene view.");
-			ComponentTypeID ids[]{ GetComponentTypeID<T>()... };
-			for (uint32_t i{ 0 }; i < sizeof...(T); i++)
 			{
-				mSignature.set(ids[i]);
+				ComponentTypeID ids[]{ GetComponentTypeID<T>()... };
+				for (uint32_t i{ 0 }; i < sizeof...(T); i++)
+				{
+					mSignature.set(ids[i]);
+				}
 			}
+
+			// should probably make an "ids used" vector instead of looping through potentially millions of ids every time
+			// also I think the it->ID is redundant as the ID is just the index?
 
 			// this is better but still slow
 			// maybe save the ids to each pack or system manager?
