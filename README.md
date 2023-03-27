@@ -49,9 +49,14 @@ Below is a basic example of:
 	SceneView<Transform> transformView{ sScene };
 	for (EntityID id : transformView)
 	{
-		Transform* trans{ sScene->GetComponent<Transform>(id) };
-		trans->x = 15.f;
+		Transform& trans{ sScene->GetComponent<Transform>(id) };
+		trans.x = 15.f;
 	}
 
 	sScene.DestroyEntity(e1);
 ```
+
+## Future
+
+Thinking of adding:
+ - Attaching components through the Entity itself.
