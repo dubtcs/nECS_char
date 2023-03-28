@@ -24,7 +24,7 @@ namespace ecs
 		const IDManager& GetIDManager() const;
 
 		template<typename T>
-		T& Attach(const EntityID& id)
+		T& Attach(const EntityID& id) // Initialize entry with blank data
 		{
 			ComponentTypeID cid{ GetComponentTypeID<T>() };
 
@@ -38,6 +38,40 @@ namespace ecs
 
 			mEntityInfo->at(id).Mask.set(cid);
 			return *static_cast<T*>(mPacks->at(cid).Add(id));
+		}
+		template<typename T>
+		T& Attach(const EntityID& id, const T& copycat) // Initialize entry with an existing object
+		{
+			ComponentTypeID cid{ GetComponentTypeID<T>() };
+
+			// make a ComponentPack for this attachment if none exists
+			if (mPacks->size() <= cid)
+			{
+				mPacks->resize(cid); // resize it to the ComponentID, that way we can use push_back to just poop one out at the end
+				mPacks->push_back({ sizeof(T) });
+			}
+
+			mEntityInfo->at(id).Mask.set(cid);
+			T& data{ *static_cast<T*>(mPacks->at(cid).Add(id)) };
+			data = copycat;
+			return data;
+		}
+		template<typename T, typename... Ar>
+		T& Attach(const EntityID& id, Ar&&... params) // Initialize entry with parameter pack
+		{
+			ComponentTypeID cid{ GetComponentTypeID<T>() };
+
+			// make a ComponentPack for this attachment if none exists
+			if (mPacks->size() <= cid)
+			{
+				mPacks->resize(cid); // resize it to the ComponentID, that way we can use push_back to just poop one out at the end
+				mPacks->push_back({ sizeof(T) });
+			}
+
+			mEntityInfo->at(id).Mask.set(cid);
+			T& data{ *static_cast<T*>(mPacks->at(cid).Add(id)) };
+			data = T{ params... };
+			return data;
 		}
 		template<typename T>
 		void Detach(const EntityID& id)
@@ -67,6 +101,46 @@ namespace ecs
 		IDManager mIDManager;
 		Ref<std::vector<ComponentPack>> mPacks;
 		Ref<std::array<EntityInfo, gMaxEntities>> mEntityInfo;
+	};
+
+	// Wrapper for scene functions
+	class Entity
+	{
+	public:
+		Entity(Ref<Scene>& s);
+		~Entity();
+		void Destroy();
+
+		template<typename T>
+		T& Attach()
+		{
+			return mScene->Attach<T>(mID);
+		}
+		template<typename T, typename... Ar>
+		T& Attach(const Ar&... paramaters)
+		{
+			return mScene->Attach<T>(mID, std::forward<const Ar&>(paramaters...));
+		}
+		template<typename T>
+		T& Attach(const T& copycat)
+		{
+			return mScene->Attach<T>(mID, std::forward<const T&>(copycat));
+		}
+
+		template<typename T>
+		void Detach()
+		{
+			return mScene->Detach<T>(mID);
+		}
+		template<typename T>
+		T& GetComponent()
+		{
+			return mScene->GetComponent<T>(mID);
+		}
+	protected:
+		EntityID mID;
+		Scene* mScene;
+		//Signature mSignature;
 	};
 
 }

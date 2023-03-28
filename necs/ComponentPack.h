@@ -7,7 +7,7 @@
 namespace ecs
 {
 
-	using PackIndex = int32_t;
+	using PackIndex = size_t;
 
 	class ComponentPack
 	{
@@ -19,10 +19,10 @@ namespace ecs
 		void Remove(const EntityID& id);
 	protected:
 		Ref<std::vector<char>> mData;
-		Ref<std::vector<size_t>> mIndexToEntity;
-		Ref<std::array<size_t, gMaxEntities>> mEntityToIndex;
+		Ref<std::vector<EntityID>> mIndexToEntity;
+		Ref<std::array<PackIndex, gMaxEntities>> mEntityToIndex;
 		size_t mElementSize;
-		uint32_t mLength{ 0 };
+		size_t mLength{ 0 };
 	};
 
 }

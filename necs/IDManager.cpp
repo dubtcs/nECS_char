@@ -31,4 +31,13 @@ namespace ecs
 		mCount--;
 	}
 
+	bool IDManager::IsUsed(const EntityID& id) const
+	{ // linear time ouch, maybe use a map
+		if (std::find(mIdsUsed.begin(), mIdsUsed.end(), id) != mIdsUsed.end())
+		{
+			return true;
+		}
+		return false;
+	}
+
 }

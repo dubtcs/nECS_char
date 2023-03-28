@@ -10,24 +10,14 @@ I wanted to try making my own. Once I heard about the idea of an ECS while worki
 
 All functionality is in namespace axt::ecs
 
-### Objects
-
-**EntityID** : A uint64_t for identifying entity data.
-
-**Scene** : This controls EntityID distribution, ComponentPack management, and data fetching.
-
-**ComponentPack** : A packed list of data for each entity it's attached to.
-
-**SceneView** : A list of EntityIDs that have components attached to them of the requested type.
-
-**IDManager** : Handles EntityID distrubtion.
+Entities can be referred to as the *ecs::Entity* class on their own or a *ecs::EntityID* managed by the scene.
 
 ### Basic Example
 
 Below is a basic example of:
 
  - Creating an antity
- - Attaching a Transform component
+ - Attaching a Transform component with a value of 1.f
  - Getting a SceneView of all entities with Transforms
  - Setting the Transform's x variable to 15
  - Deleting the entity
@@ -44,7 +34,7 @@ Below is a basic example of:
 
 	EntityID e1{ sScene.CreateEntity() };
 
-	sScene.Attach<Transform>(e1);
+	sScene.Attach<Transform>(e1, { 1.f });
 
 	SceneView<Transform> transformView{ sScene };
 	for (EntityID id : transformView)
@@ -59,4 +49,4 @@ Below is a basic example of:
 ## Future
 
 Thinking of adding:
- - Attaching components through the Entity itself.
+ - (DONE) Attaching components through the Entity itself.

@@ -21,12 +21,16 @@ namespace ecs
 	{
 		// remove the data from each pack it belongs to
 		// reset the mask
-		for (ComponentPack& pack : *mPacks)
+		if (mIDManager.IsUsed(id))
 		{
-			pack.Remove(id);
+			for (ComponentPack& pack : *mPacks)
+			{
+				pack.Remove(id);
+			}
+			mEntityInfo->at(id).Mask.reset();
+			mIDManager.Remove(id);
 		}
-		mEntityInfo->at(id).Mask.reset();
-		mIDManager.Remove(id);
+		
 	}
 
 	Ref<std::array<Scene::EntityInfo, gMaxEntities>> Scene::GetEntityInfo()
@@ -37,6 +41,22 @@ namespace ecs
 	const IDManager& Scene::GetIDManager() const
 	{
 		return mIDManager;
+	}
+
+	Entity::Entity(Ref<Scene>& s) :
+		mScene { s.get() }
+	{
+		mID = s->CreateEntity();
+	}
+
+	Entity::~Entity()
+	{
+		Destroy();
+	}
+
+	void Entity::Destroy()
+	{
+		mScene->DestroyEntity(mID);
 	}
 
 }

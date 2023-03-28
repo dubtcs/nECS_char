@@ -22,7 +22,6 @@ namespace ecs
 				}
 			}
 
-			// should probably make an "ids used" vector instead of looping through potentially millions of ids every time
 			// also I think the it->ID is redundant as the ID is just the index?
 
 			// this is better but still slow
